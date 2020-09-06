@@ -47,13 +47,13 @@ get_png <- function(filename) {
   grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
 }
 
-logo <- get_png("hz.png")
+logo <- get_png(getURLContent("https://raw.githubusercontent.com/robbiestill/football-analysis/master/R/ggplot/hz.png"))
 
 # plot the graph. geom_text_repel offers more options for labelling, and I prefer 
 # using it to geom_text or geom_label. note the markdown formatting for the 
-#labs(title=) string, this will not work without element_markdown in the theme. 
+#labs(title=) string, this will not work without element_markdown in the theme.
 
-p2 <- ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, 
+ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, 
                        col = colour))+
   geom_text_repel(
     aes(label=ifelse(xAper90>0.5|PassCompletion>87|player == "Bruno Fernandes",
@@ -78,4 +78,5 @@ p2 <- ggplot(data, aes(x= PassCompletion, y= xAper90, label=player,
   coord_cartesian(clip = "off") 
   
 #ggsave(p2, filename = "playmakers-new.jpeg", device = "jpeg")
+
 
