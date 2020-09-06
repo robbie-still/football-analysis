@@ -4,6 +4,7 @@ This repository will contain my random collection of R and Python templates for 
 
 ## Examples
 
+### ggplot theme - see [this folder](https://github.com/robbiestill/football-analysis/blob/master/R/ggplot/scatter_template) for full code. 
 
 ```{r,echo=TRUE, message=FALSE}
 
