@@ -3,16 +3,20 @@ library(ggplot2)
 library(ggrepel)
 library(grid)
 library(ggtext)
-library(png)
-library(RCurl)
+
+# set colour and font parameters
 
 background = "#242424"
-text_colour = "white"
-filler = "darkslategray"
+text_colour = "#FFFFFF"
+filler = "#2f4f4f"
 primary = "#136D99"
 secondary = "#F9124E"
 tertiary = "#F59F45"
 title_font = "Helvetica"
+
+# create my custom theme, based on theme_bw() with a few adjustments. 
+# element_markdown is part of ggtext and is required over element_text()
+# for any text you want to format with different colours. 
 
 theme_rs <- function(){
   theme_bw() %+replace% 
@@ -29,11 +33,15 @@ theme_rs <- function(){
           plot.margin = margin(1, 0.5, 0.5, 0.5, "cm"))
 }
 
+# read in the data, gathered from Infogol, and set some formatting settings
+
 data <- read_csv("playmakers.csv") %>% 
   mutate(colour = case_when(PassCompletion<80&xAper90>0.5 ~ "primary",
                             PassCompletion>87 ~ "secondary",
                             TRUE ~ "filler"))
 
+# read in the PNG of Ziyech as a rasterGrob. The PNG is in the github folder, 
+# sourced from this link: https://toppng.com/hakim-ziyech-PNG-free-PNG-Images_64403
 
 get_png <- function(filename) {
   grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
@@ -41,7 +49,12 @@ get_png <- function(filename) {
 
 logo <- get_png("hz.png")
 
-p2 <- ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, col = colour))+
+# plot the graph. geom_text_repel offers more options for labelling, and I prefer 
+# using it to geom_text or geom_label. note the markdown formatting for the 
+#labs(title=) string, this will not work without element_markdown in the theme. 
+
+p2 <- ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, 
+                       col = colour))+
   geom_text_repel(
     aes(label=ifelse(xAper90>0.5|PassCompletion>87|player == "Bruno Fernandes",
                      as.character(player),'')),
@@ -65,3 +78,4 @@ p2 <- ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, col = colour
   coord_cartesian(clip = "off") 
   
 #ggsave(p2, filename = "playmakers-new.jpeg", device = "jpeg")
+
