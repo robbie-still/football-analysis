@@ -82,8 +82,10 @@ class ComplexRadar():
         sdata = _scale_data(data, self.ranges)
         self.ax.fill(self.angle, np.r_[sdata, sdata[0]], *args, **kw)
 
-
-df = pd.read_excel(r'radar templates/radar full back template.xlsx')
+url = 'https://raw.githubusercontent.com/robbiestill/football-analysis/master/Python/bellarin%20and%20amn.csv'
+df = pd.read_csv(url, index_col=0)
+print(df.head(5))
+df = pd.read_csv('')
 print(df)
 
 playerone = tuple(df.iloc[1:11,1])
