@@ -29,7 +29,7 @@ theme_rs <- function(){
           plot.margin = margin(1, 0.5, 0.5, 0.5, "cm"))
 }
 
-data <- readxl::read_excel("playmakers.xlsx") %>% 
+data <- read_csv("playmakers.csv") %>% 
   mutate(colour = case_when(PassCompletion<80&xAper90>0.5 ~ "primary",
                             PassCompletion>87 ~ "secondary",
                             TRUE ~ "filler"))
