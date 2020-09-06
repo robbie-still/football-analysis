@@ -3,6 +3,7 @@ library(ggplot2)
 library(ggrepel)
 library(grid)
 library(ggtext)
+library(RCurl)
 
 # set colour and font parameters
 
@@ -35,7 +36,7 @@ theme_rs <- function(){
 
 # read in the data, gathered from Infogol, and set some formatting settings
 
-data <- read_csv("playmakers.csv") %>% 
+data <- read_csv("https://raw.githubusercontent.com/robbiestill/football-analysis/master/R/ggplot/playmakers.csv") %>% 
   mutate(colour = case_when(PassCompletion<80&xAper90>0.5 ~ "primary",
                             PassCompletion>87 ~ "secondary",
                             TRUE ~ "filler"))
@@ -54,7 +55,7 @@ logo <- get_png(getURLContent("https://raw.githubusercontent.com/robbiestill/foo
 #labs(title=) string, this will not work without element_markdown in the theme.
 
 ggplot(data, aes(x= PassCompletion, y= xAper90, label=player, 
-                       col = colour))+
+                 col = colour))+
   geom_text_repel(
     aes(label=ifelse(xAper90>0.5|PassCompletion>87|player == "Bruno Fernandes",
                      as.character(player),'')),
@@ -68,15 +69,13 @@ ggplot(data, aes(x= PassCompletion, y= xAper90, label=player,
   theme_rs() + 
   theme(legend.position = "none") + 
   labs(title = paste0("<span style='font-family:",title_font,
-    "'>Elite playmakers: <span style='color:", 
-    primary,";'>high</span> or <span style='color:",secondary,
-    ";'>low</span> risk passing profiles </span>"), 
-    subtitle = "Data from Infogol, Domestic Leagues 2019/20") +
+                      "'>Elite playmakers: <span style='color:", 
+                      primary,";'>high</span> or <span style='color:",secondary,
+                      ";'>low</span> risk passing profiles </span>"), 
+       subtitle = "Data from Infogol, Domestic Leagues 2019/20") +
   xlab("Pass Completion (%)") +
   ylab("Expected Assists Per 90") +
   annotation_custom(logo, xmin = 89, xmax = 90.5, ymin = 0.85, ymax = 0.98) +
   coord_cartesian(clip = "off") 
-  
-#ggsave(p2, filename = "playmakers-new.jpeg", device = "jpeg")
 
 
