@@ -14,6 +14,8 @@ filler = "darkslategray"
 primary = "#F59F45"
 secondary = "#136D99"
 title_font = "Helvetica"
+league = "English Premier League"
+season = "2019/20"
 mpl.rcParams['xtick.color'] = text_colour
 mpl.rcParams['ytick.color'] = text_colour
 
@@ -109,7 +111,7 @@ s = "Comparing <{}> with <{}>\n"
 htext.fig_htext(s.format(columnsNamesArr[1],columnsNamesArr[2]),0.16,1.12,highlight_colors=[primary, secondary],
                 highlight_weights=["bold"],string_weight="bold",fontsize=14,
                 fontfamily=title_font,color=text_colour)
-fig1.text(0.16,1.12,"English Premier League "+df.iloc[0,1],fontweight="regular",fontsize=14,
+fig1.text(0.16,1.12,league + season,fontweight="regular",fontsize=14,
          color=text_colour, fontfamily=title_font)
 # add logo
 ax2=fig1.add_axes([0,1.05,0.2,0.2])
