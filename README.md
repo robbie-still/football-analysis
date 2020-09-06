@@ -62,7 +62,7 @@ response = requests.get(url)
 img = Image.open(BytesIO(response.content))
 ax2.imshow(img)
 
-#add credit
+#add credit 
 fig1.text(0, -0.025, "Created by Robbie Still / @datarobbie1. Data provided by WhoScored.com",
                        fontstyle="italic", fontsize=9, fontfamily=title_font, color=text_colour)
 
